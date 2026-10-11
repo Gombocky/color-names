@@ -1,5 +1,6 @@
-# Builds the project website (website/, which lives only on this branch)
-# and publishes it to GitHub Pages. Before building it takes in main, so
+# Builds the project website (website/, which lives only on this branch),
+# with a page per name from the website-data branch, and publishes it to
+# GitHub Pages. Before building it takes in main, so
 # the "date added" data is read from the list's latest history.
 
 name: Website
@@ -29,6 +30,12 @@ jobs:
         run: |
           git fetch origin main
           git -c user.name=ci -c user.email=ci@localhost merge --no-edit FETCH_HEAD
+      # the nightly copy of what Wikipedia says about each name, for the
+      # pages the build writes per name (scripts/pages.mjs)
+      - uses: actions/checkout@v4
+        with:
+          ref: website-data
+          path: website/.data
       - uses: actions/setup-node@v4
         with:
           node-version: 24
