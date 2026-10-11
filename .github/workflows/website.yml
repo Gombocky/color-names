@@ -27,7 +27,8 @@ jobs:
           fetch-depth: 0 # added.mjs reads the whole history of the list
       - name: Take in master's latest list
         run: |
-          git -c user.name=ci -c user.email=ci@localhost merge --no-edit origin/master
+          git fetch origin master
+          git -c user.name=ci -c user.email=ci@localhost merge --no-edit FETCH_HEAD
       - uses: actions/setup-node@v4
         with:
           node-version: 24
